@@ -1,0 +1,45 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'se.transmode.gradle:gradle-docker:1.2'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-jersey')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task buildDocker(type: Docker) {
+	baseImage = 'develar/java:latest'
+	push = project.hasProperty('push')
+	tag = 'simple-app-docker-plugin'
+	addFile {
+		from jar
+		rename {'simple-app-docker-plugin.jar'}
+	}
+	entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/simple-app-docker-plugin.jar'])
+	// exposePort(8080)
+}
+
+buildDocker.dependsOn(build)
