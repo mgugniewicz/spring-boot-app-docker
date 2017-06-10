@@ -133,13 +133,26 @@ output:
 2017-06-04 17:46:54.439  INFO 1 --- [           main] c.p.s.SimpleAppDockerPluginApplication   : Started SimpleAppDockerPluginApplication in 4.401 seconds (JVM running for 4.91)
 ```
 
-to push image to docker registy on installed to other host docker section to your build.gradle
-```
-docker {
-	useApi false
-	hostUrl 'http://remotehost:5000'
-	maintainer = 'Piotr Pawliszcze <pwl@pwl.org>'
+to push image to docker registy installed on remote host,change line with tag to :
+
+task buildDocker(type: Docker) {
+	baseImage = 'develar/java:latest'
+	push = project.hasProperty('push')
+	*tag = '10.32.15.221:5000/simple-app-docker-plugin'*
+	addFile {
+		from jar
+		rename {'simple-app-docker-plugin.jar'}
+
 }
+	entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/simple-app-docker-plugin.jar'])
+	exposePort(8090) //port used by application
+}
+```
+
+and run
+```
+gradlew dockerBuild -Ppush
+
 ```
 
 
