@@ -75,7 +75,7 @@ Removing intermediate container 547cf284d088
 Successfully built e74e5fa15b94
 ```
 
-To chekc if our image is build and push to docker run command:
+To check if image is build and copied to docker, run command:
 ```
 docker images
 ```
@@ -86,14 +86,14 @@ simple-app-docker-plugin   0.0.1-SNAPSHOT      e74e5fa15b94        17 minutes ag
 develar/java               latest              edc8788ce767        12 months ago       118 MB
 
 ```
-You can check your dokcer file in build/docker/Dockerfile
+You can check your dokcer file in *build/docker/Dockerfile*
 
 ```
 FROM develar/java:latest
 ADD add_1.tar /
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/simple-app-docker-plugin.jar"]
 ```
-To run our new image in docker run command :
+To run new image in docker run command :
 ```
 docker run simple-app-docker-plugin:0.0.1-SNAPSHOT
 ```
