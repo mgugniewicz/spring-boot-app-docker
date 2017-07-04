@@ -93,7 +93,7 @@ FROM develar/java:latest
 ADD add_1.tar /
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/simple-app-docker-plugin.jar"]
 ```
-To run docker with our image run command :
+To run our new image in docker run command :
 ```
 docker run simple-app-docker-plugin:0.0.1-SNAPSHOT
 ```
@@ -135,6 +135,7 @@ output:
 
 to push image to docker registy installed on remote host,change line with tag to :
 
+```gradle
 task buildDocker(type: Docker) {
 	baseImage = 'develar/java:latest'
 	push = project.hasProperty('push')
