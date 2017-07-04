@@ -133,13 +133,13 @@ output:
 2017-06-04 17:46:54.439  INFO 1 --- [           main] c.p.s.SimpleAppDockerPluginApplication   : Started SimpleAppDockerPluginApplication in 4.401 seconds (JVM running for 4.91)
 ```
 
-to push image to docker registy installed on remote host,change line with tag to :
+to push image to docker registy installed on remote host,change line  with tag 'tag', to :
 
 ```gradle
 task buildDocker(type: Docker) {
 	baseImage = 'develar/java:latest'
 	push = project.hasProperty('push')
-	*tag = '10.32.15.221:5000/simple-app-docker-plugin'*
+	tag = '10.32.15.221:5000/simple-app-docker-plugin'*
 	addFile {
 		from jar
 		rename {'simple-app-docker-plugin.jar'}
