@@ -33,7 +33,7 @@ dependencies {
 task buildDocker(type: Docker) {
 	baseImage = 'develar/java:latest'
 	push = project.hasProperty('push')
-	tag = 'simple-app-docker-plugin'
+	tag = 'simple-app'
 	addFile {
 		from jar
 		rename {'simple-app-docker-plugin.jar'}
